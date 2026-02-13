@@ -1,5 +1,8 @@
 /*
   Blink
+  
+  Developer: 1234Cyle
+  Date: 2.13.2026
 
   Turns an LED on for one second, then off for one second, repeatedly.
 
