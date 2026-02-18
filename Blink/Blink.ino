@@ -26,19 +26,35 @@
 */
 
 // the setup function runs once when you press reset or power the board
+const int speakerPin = 11;
+
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(11, OUTPUT);
   pinMode(10, OUTPUT);
   pinMode(9, OUTPUT);
 }
 
-// the loop function runs over and over again forever
 void loop() {
-  digitalWrite(9, HIGH);  // turn the LED on (HIGH is the voltage level)                  
-  digitalWrite(10, LOW);   // turn the LED off by making the voltage LOW
-  delay(500);                      // wait for a second
 
-  digitalWrite(10, HIGH);  // turn the LED on (HIGH is the voltage level)                   // wait for a second
-  digitalWrite(9, LOW);   // turn the LED off by making the voltage LOW
-  delay(500);
+  // LED State 1
+  digitalWrite(9, HIGH);
+  digitalWrite(10, LOW);
+
+  // Sweep UP: 100 Hz → 900 Hz
+  for (int freq = 500; freq <= 1700; freq += 5) {
+    tone(speakerPin, freq);
+    delay(6);
+  }
+
+  // LED State 2
+  digitalWrite(9, LOW);
+  digitalWrite(10, HIGH);
+
+  // Sweep DOWN: 900 Hz → 100 Hz
+  for (int freq = 1700; freq >= 500; freq -= 5) {
+    tone(speakerPin, freq);
+    delay(6);
+  }
 }
+
+
