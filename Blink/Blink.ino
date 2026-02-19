@@ -27,11 +27,16 @@
 
 // the setup function runs once when you press reset or power the board
 const int speakerPin = 11;
+const int fadePin = 3;   // LED that fades
+
+int brightness = 0;
+int fadeAmount = 1.9;
 
 void setup() {
   pinMode(11, OUTPUT);
   pinMode(10, OUTPUT);
   pinMode(9, OUTPUT);
+  pinMode(3, OUTPUT);
 }
 
 void loop() {
@@ -40,9 +45,18 @@ void loop() {
   digitalWrite(9, HIGH);
   digitalWrite(10, LOW);
 
-  // Sweep UP: 100 Hz → 900 Hz
+  // Sweep UP
   for (int freq = 500; freq <= 1700; freq += 5) {
     tone(speakerPin, freq);
+
+    // Fade LED on pin 3
+    analogWrite(fadePin, brightness);
+    brightness += fadeAmount;
+
+    if (brightness <= 0 || brightness >= 255) {
+      fadeAmount = -fadeAmount;
+    }
+
     delay(6);
   }
 
@@ -50,11 +64,21 @@ void loop() {
   digitalWrite(9, LOW);
   digitalWrite(10, HIGH);
 
-  // Sweep DOWN: 900 Hz → 100 Hz
+  // Sweep DOWN
   for (int freq = 1700; freq >= 500; freq -= 5) {
     tone(speakerPin, freq);
+
+    // Keep fading
+    analogWrite(fadePin, brightness);
+    brightness += fadeAmount;
+
+    if (brightness <= 0 || brightness >= 255) {
+      fadeAmount = -fadeAmount;
+    }
+
     delay(6);
   }
 }
+
 
 
